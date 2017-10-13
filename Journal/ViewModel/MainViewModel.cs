@@ -6,13 +6,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Journal.Properties;
 
 namespace Journal.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private string path = "journalEntries.json";
-
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -64,11 +63,17 @@ namespace Journal.ViewModel
         private RelayCommand loaded;
         public RelayCommand Loaded => loaded ?? (loaded = new RelayCommand(() =>
         {
-        if (File.Exists(path) && !Entries.Any())
+            var path = Settings.Default.journalPath;
+
+            if(!File.Exists(path))
+            {
+                throw new Exception($"Unable to locate {path}...check the settings file.");
+            }
+            if (File.Exists(path) && !Entries.Any())
             {
                 string text = File.ReadAllText(path);
                 var entries = JsonConvert.DeserializeObject<IEnumerable<JournalEntry>>(text);
-                Entries = new ObservableCollection<JournalEntry>( entries);
+                Entries = new ObservableCollection<JournalEntry>(entries);
                 RaisePropertyChanged(nameof(Entries));
             }
         }));
@@ -77,7 +82,7 @@ namespace Journal.ViewModel
         public RelayCommand Closing => closing ?? (closing = new RelayCommand(() =>
         {
             var json = JsonConvert.SerializeObject(Entries.OrderByDescending(e => e.Date), Formatting.Indented);
-            File.WriteAllText(path, json);
+            File.WriteAllText(Settings.Default.journalPath, json);
         }));
 
     }
