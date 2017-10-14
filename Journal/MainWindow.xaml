@@ -24,7 +24,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="130" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -36,7 +36,7 @@
                  Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Date, StringFormat=d}" />
+                    <TextBlock Text="{Binding Date, StringFormat='ddd dd MMM yyyy'}" FontFamily="Consolas" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
