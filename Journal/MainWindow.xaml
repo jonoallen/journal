@@ -43,9 +43,19 @@
 
         <TextBlock Text="Date"
                    Grid.Column="1"
+                   VerticalAlignment="Center"
                    Margin="5" />
 
+        <TextBlock Text="Writing in your journal is your &quot;Return &amp; Report&quot; to the Lord.  
+Take it seriously and consider how you have used your time today."
+                   Margin="5"
+                   TextWrapping="Wrap"
+                   FontSize="14pt"
+                   FontWeight="SemiBold"
+                   Grid.Column="3" />
+
         <DatePicker Grid.Column="2"
+                    VerticalAlignment="Center"
                     Margin="5"
                     SelectedDate="{Binding SelectedEntry.Date}" />
 
@@ -59,12 +69,28 @@
         <DataGrid Grid.ColumnSpan="3"
                   Grid.Column="1"
                   Grid.Row="1"
+                  Margin="5"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding SelectedEntry.Items}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}"
                                     Header="Title"
-                                    MinWidth="120" />
+                                    MinWidth="120">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="TextWrapping"
+                                    Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="TextWrapping"
+                                    Value="Wrap" />
+                            <Setter Property="AcceptsReturn"
+                                    Value="true" />
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Content"
                                     Binding="{Binding Content}"
                                     Width="*">
